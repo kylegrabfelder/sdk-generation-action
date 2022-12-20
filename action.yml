@@ -17,6 +17,12 @@ inputs:
     description: 'Flag to publish official releases'
     required: false
     default: false
+  access-token:
+    description: 'GitHub Personal Access Token to read from the main branch'
+    required: true
+  npm-auth:
+    description: 'NPM Authorization Token to publish package versions'
+    required: true
 runs:
   using: "composite"
   steps:
@@ -49,14 +55,14 @@ runs:
       continue-on-error: true
       with:
         specFileName: schemas/openapi.yaml
-        accessToken: ${{ secrets.access-token }}
+        accessToken: ${{ inputs.access-token }}
         format: yaml
 
     - name: Publish Prerelease
       if: inputs.production != true
       shell: bash
       env:
-        NPM_ARTIFACTORY_AUTH: ${{ secrets.npm-auth }}
+        NPM_ARTIFACTORY_AUTH: ${{ inputs.npm-auth }}
         CHANGE_STATUS: ${{ steps.breaking_change_detection.outcome }}
       run: |
         npm config set registry https://tylertech.jfrog.io/artifactory/api/npm/aurora-npm-local
@@ -133,7 +139,7 @@ runs:
     - name: Publish Release
       if: inputs.production == true
       env:
-        NPM_ARTIFACTORY_AUTH: ${{ secrets.npm-auth }}
+        NPM_ARTIFACTORY_AUTH: ${{ inputs.npm-auth }}
       shell: bash
       run: |
         npm config set registry https://tylertech.jfrog.io/artifactory/api/npm/aurora-npm-local
