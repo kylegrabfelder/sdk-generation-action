@@ -1,0 +1,16 @@
+additionalProperties:
+  usePromises: true
+files:
+  api.mustache:
+    templateType: API
+    destinationFilename: .js
+  ApiClient.mustache:
+    templateType: API
+  index.mustache:
+    templateType: API
+  package.mustache:
+    templateType: SupportingFiles
+    destinationFilename: package.json
+  tsconfig.mustache:
+    templateType: SupportingFiles
+    destinationFilename: tsconfig.json
