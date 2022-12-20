@@ -5,24 +5,25 @@ inputs:
     description: 'Path to the Open API Specification'
     required: true
   namespace:
-    description: 'Unique name of the service the SDK supports'
+    description: 'Unique namespace for the service client'
     required: true
   package-name:
     description: 'NPM Package Name'
     required: true
-  package-scope:
-    description: 'NPM Package Scope'
-    required: true
-  production:
-    description: 'Flag to publish official releases'
-    required: false
-    default: false
   access-token:
     description: 'GitHub Personal Access Token to read from the main branch'
     required: true
   npm-auth:
     description: 'NPM Authorization Token to publish package versions'
     required: true
+  package-scope:
+    description: 'NPM Package Scope'
+    default: "@tylertech"
+    required: false
+  production:
+    description: 'Flag to publish official releases'
+    required: false
+    default: false
 runs:
   using: "composite"
   steps:
