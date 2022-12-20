@@ -51,7 +51,7 @@ runs:
         npm install
 
     - uses: allenheltondev/detect-breaking-changes-action@v1
-      if: inputs.production != true
+      if: ${{ inputs.production != 'true' }}
       id: breaking_change_detection
       continue-on-error: true
       with:
@@ -60,7 +60,7 @@ runs:
         format: yaml
 
     - name: Publish Prerelease
-      if: inputs.production != true
+      if: ${{ inputs.production != 'true' }}
       shell: bash
       env:
         NPM_ARTIFACTORY_AUTH: ${{ inputs.npm-auth }}
@@ -138,7 +138,7 @@ runs:
         npm publish --tag "pr-${{ github.event.number }}"
 
     - name: Publish Release
-      if: inputs.production == true
+      if: ${{ inputs.production == 'true' }}
       env:
         NPM_ARTIFACTORY_AUTH: ${{ inputs.npm-auth }}
       shell: bash
