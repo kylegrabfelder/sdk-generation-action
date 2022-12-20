@@ -49,19 +49,19 @@ runs:
       continue-on-error: true
       with:
         specFileName: schemas/openapi.yaml
-        accessToken: ${{ secrets.PAT }}
+        accessToken: ${{ secrets.access-token }}
         format: yaml
 
     - name: Publish Prerelease
       if: inputs.production != true
       shell: bash
       env:
-        NPM_ARTIFACTORY_AUTH: ${{ secrets.NPM_ARTIFACTORY_AUTH }}
+        NPM_ARTIFACTORY_AUTH: ${{ secrets.npm-auth }}
         CHANGE_STATUS: ${{ steps.breaking_change_detection.outcome }}
       run: |
         npm config set registry https://tylertech.jfrog.io/artifactory/api/npm/aurora-npm-local
         npm config set _auth "$NPM_ARTIFACTORY_AUTH"
-        PACKAGE_NAME="${{ input.package-scope }}/${{ input.package-name }}"
+        PACKAGE_NAME="${{ inputs.package-scope }}/${{ inputs.package-name }}"
 
         # Step 1.
         # If a release has not been published, publish a placeholder initial release.
@@ -133,12 +133,12 @@ runs:
     - name: Publish Release
       if: inputs.production == true
       env:
-        NPM_ARTIFACTORY_AUTH: ${{ secrets.NPM_ARTIFACTORY_AUTH }}
+        NPM_ARTIFACTORY_AUTH: ${{ secrets.npm-auth }}
       shell: bash
       run: |
         npm config set registry https://tylertech.jfrog.io/artifactory/api/npm/aurora-npm-local
         npm config set _auth "$NPM_ARTIFACTORY_AUTH"
-        PACKAGE_NAME="${{ input.package-scope }}/${{ input.package-name }}"
+        PACKAGE_NAME="${{ inputs.package-scope }}/${{ inputs.package-name }}"
 
         # Step 1.
         # Get the PR number from the commit history
