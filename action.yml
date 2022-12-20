@@ -10,12 +10,12 @@ inputs:
   package-name:
     description: 'NPM Package Name'
     required: true
-  access-token:
-    description: 'GitHub Personal Access Token to read from the main branch'
-    required: true
   npm-auth:
     description: 'NPM Authorization Token to publish package versions'
     required: true
+  access-token:
+    description: 'GitHub Personal Access Token to read from the main branch. Only used for prereleases (QA).'
+    required: false
   package-scope:
     description: 'NPM Package Scope'
     default: "@tylertech"
