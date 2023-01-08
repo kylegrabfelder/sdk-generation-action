@@ -34,6 +34,7 @@ runs:
         mkdir -p ${{ github.workspace }}/sdk
         cp -r custom_templates ${{ github.workspace }}/sdk
         cp config.yaml ${{ github.workspace }}/sdk
+        cat ${{ inputs.openapi-path }} | yq '.paths[][]'
 
     - name: Generate SDK
       uses: openapi-generators/openapitools-generator-action@v1.3.0
